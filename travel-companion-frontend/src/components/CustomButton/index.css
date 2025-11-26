@@ -1,0 +1,11 @@
+button {
+    padding: 0.7rem;
+    background-color: var(--primary);
+    color: white;
+
+}
+
+button:hover {
+    background-color: var(--secondary);
+    outline: none;
+}
