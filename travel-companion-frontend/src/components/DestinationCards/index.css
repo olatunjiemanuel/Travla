@@ -5,19 +5,38 @@
     border-radius: 10px;
     border: 1px solid black;
     align-items: flex-start;
+    padding: 1rem;
 }
 
 .imgCntnr {
     background-color: red;
-    padding: 1rem;
+    width: 90%;
+    height: 10rem;
+    padding: 0.5rem;
     border-radius: 10px;
     display: flex;
     align-self: center;
+    margin-bottom: 2rem;
+}
+
+.destinationCntnr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 0.5rem;
 }
 
 .cityCntnr {
-    display: flex;
-    flex-direction: column;
+
+}
+p {
+    margin: 0;
+}
+
+
+.cityText {
+    font-weight: bold;
 }
 
 .btnCntnr {
