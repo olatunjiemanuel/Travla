@@ -3,9 +3,9 @@
     flex-direction: column;
     width: 15rem;
     border-radius: 10px;
-    border: 1px solid black;
     align-items: flex-start;
     padding: 1rem;
+    background-color: white;
 }
 
 .imgCntnr {
