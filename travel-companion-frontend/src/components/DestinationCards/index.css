@@ -1,0 +1,45 @@
+.destinationCardCntnr {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    border-radius: 10px;
+    align-items: flex-start;
+    padding: 1rem;
+    background-color: white;
+}
+
+.imgCntnr {
+    background-color: red;
+    width: 90%;
+    height: 10rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-self: center;
+    margin-bottom: 2rem;
+}
+
+.destinationCntnr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 0.5rem;
+}
+
+.cityCntnr {
+
+}
+p {
+    margin: 0;
+}
+
+
+.cityText {
+    font-weight: bold;
+}
+
+.btnCntnr {
+    display: flex;
+    align-self: flex-end;
+}

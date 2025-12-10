@@ -1,0 +1,22 @@
+.searchBarCntnr {
+    display: flex;
+    padding: 0.1rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.searchLogoCntnr {
+    display: flex;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.input {
+    flex: 1;
+    border-radius: 10px;
+    width: 50rem;
+    padding: 0.5rem;
+    border: 0;
+    outline: none;
+}
