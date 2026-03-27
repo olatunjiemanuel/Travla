@@ -1,42 +1,259 @@
+/* ── Layout ─────────────────────────────────────────── */
 #root {
-  max-width: 1280px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 2rem 1rem;
+  text-align: left;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ── Search page ────────────────────────────────────── */
+.search-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 0.25rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.app-subtitle {
+  color: #888;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ccc;
+}
+
+.search-form input[type='text'],
+.search-form input[type='date'] {
+  padding: 0.65em 0.9em;
+  font-size: 1rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-form input:focus {
+  border-color: #4f6ef7;
+}
+
+.search-form input:disabled {
+  opacity: 0.5;
+}
+
+.search-form button[type='submit'] {
+  padding: 0.75em 1.5em;
+  background: #4f6ef7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.search-form button[type='submit']:hover:not(:disabled) {
+  background: #3a5ae0;
+}
+
+.search-form button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Summary view ───────────────────────────────────── */
+.summary-view {
+  padding-bottom: 4rem;
+}
+
+.summary-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summary-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+}
+
+.summary-date {
+  color: #888;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.btn-secondary {
+  padding: 0.5em 1em;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  border-color: #888;
+}
+
+/* ── Weather card ───────────────────────────────────── */
+.weather-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid #333;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+  background: #111;
+}
+
+.weather-card--climate {
+  padding: 1.2rem 1.6rem;
+}
+
+.weather-temp {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.weather-description {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+}
+
+.weather-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #1e3a8a;
+  color: #93c5fd;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.weather-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.weather-climate-text {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* ── Sections ───────────────────────────────────────── */
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #333;
+}
+
+/* ── Cards ──────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
 }
 
 .card {
-  padding: 2em;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  background: #111;
 }
 
-.read-the-docs {
-  color: #888;
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.4rem 0 0.3rem;
+}
+
+.card-text {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  background: #1e3350;
+  color: #93c5fd;
+  padding: 0.2em 0.55em;
+  border-radius: 4px;
+}
+
+.badge--event {
+  background: #2d1e40;
+  color: #c4b5fd;
+}
+
+/* ── Tips list ──────────────────────────────────────── */
+.tips-list {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 2;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* ── Error box ──────────────────────────────────────── */
+.error-box {
+  background: #2a0f0f;
+  border: 1px solid #7f1d1d;
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  max-width: 420px;
+  width: 100%;
 }
