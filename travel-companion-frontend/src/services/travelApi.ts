@@ -12,8 +12,13 @@ export async function fetchTravelSummary(
   });
 
   if (!response.ok) {
-    const errorBody = (await response.json().catch(() => ({}))) as { error?: string };
-    throw new Error(errorBody.error ?? `Request failed with status ${response.status}`);
+    const errorBody = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      detail?: string;
+    };
+    throw new Error(
+      errorBody.error ?? errorBody.detail ?? `Request failed with status ${response.status}`,
+    );
   }
 
   return response.json() as Promise<TravelSummaryResponse>;

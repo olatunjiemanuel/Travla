@@ -31,26 +31,26 @@ public class TravelAiService(IHttpClientFactory httpClientFactory, IConfiguratio
             ? $"Describe the typical weather and climate for {city} in {month}. Be concise (2-3 sentences)."
             : "Set this to null.";
 
-        var userMessage = $"""
-            I am travelling to {city} on {formattedDate}.
+        var userMessage = $$"""
+            I am travelling to {{city}} on {{formattedDate}}.
 
             Return a JSON object with exactly these keys:
-            {{
+            {
               "places": [
-                {{ "name": "string", "description": "string (1-2 sentences)", "category": "string (e.g. Landmark, Museum, Nature, Food)" }}
+                { "name": "string", "description": "string (1-2 sentences)", "category": "string (e.g. Landmark, Museum, Nature, Food)" }
               ],
               "events": [
-                {{ "name": "string", "description": "string (1-2 sentences)", "timing": "string (e.g. Ongoing, Seasonal, Annual in {month})" }}
+                { "name": "string", "description": "string (1-2 sentences)", "timing": "string (e.g. Ongoing, Seasonal, Annual in {{month}})" }
               ],
               "tips": ["string", "string"],
               "climateContext": "string or null"
-            }}
+            }
 
             Rules:
             - "places": return 5 top attractions or landmarks worth visiting.
             - "events": return 3-5 local events, festivals, or cultural highlights relevant to that time of year.
             - "tips": return 5-7 practical travel tips covering what to pack, local customs, transport, and recommended neighbourhoods.
-            - "climateContext": {climateInstructions}
+            - "climateContext": {{climateInstructions}}
             """;
 
         var requestBody = new
@@ -83,8 +83,18 @@ public class TravelAiService(IHttpClientFactory httpClientFactory, IConfiguratio
         var claudeResponse = JsonSerializer.Deserialize<ClaudeResponse>(responseJson, _jsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialise Claude response.");
 
-        var text = claudeResponse.Content.FirstOrDefault(c => c.Type == "text")?.Text
+        var rawText = claudeResponse.Content.FirstOrDefault(c => c.Type == "text")?.Text
             ?? throw new InvalidOperationException("Claude returned no text content.");
+
+        // Strip markdown code fences if Claude wraps the JSON despite instructions
+        var text = rawText.Trim();
+        if (text.StartsWith("```"))
+        {
+            var firstNewline = text.IndexOf('\n');
+            var lastFence = text.LastIndexOf("```");
+            if (firstNewline >= 0 && lastFence > firstNewline)
+                text = text[(firstNewline + 1)..lastFence].Trim();
+        }
 
         var data = JsonSerializer.Deserialize<AiTravelData>(text, _jsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialise Claude travel data.");
