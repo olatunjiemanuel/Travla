@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import styles from './App.module.css';
+import SearchForm from './Components/SearchForm';
+import TravelSummaryView from './Components/TravelSummaryView';
+import { fetchTravelSummary } from './services/travelApi';
+import type { TravelSummaryResponse } from './types/travel';
 
-function App() {
-  const [count, setCount] = useState(0)
+type AppState =
+  | { view: 'search' }
+  | { view: 'loading'; city: string; travelDate: string }
+  | { view: 'results'; summary: TravelSummaryResponse; city: string; travelDate: string }
+  | { view: 'error'; message: string };
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+const App: React.FC = () => {
+  const [state, setState] = useState<AppState>({ view: 'search' });
+
+  async function handleSearch(city: string, travelDate: string) {
+    setState({ view: 'loading', city, travelDate });
+    try {
+      const summary = await fetchTravelSummary({ city, travelDate });
+      setState({ view: 'results', summary, city, travelDate });
+    } catch (err) {
+      setState({
+        view: 'error',
+        message: err instanceof Error ? err.message : 'Something went wrong. Please try again.',
+      });
+    }
+  }
+
+  if (state.view === 'results') {
+    return (
+      <TravelSummaryView
+        summary={state.summary}
+        city={state.city}
+        travelDate={state.travelDate}
+        onReset={() => setState({ view: 'search' })}
+      />
+    );
+  }
+
+  if (state.view === 'error') {
+    return (
+      <div className={styles.searchPage}>
+        <h1 className={styles.appTitle}>Travla</h1>
+        <div className={styles.errorBox}>{state.message}</div>
+        <button className={styles.btnSecondary} onClick={() => setState({ view: 'search' })}>
+          Try again
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    );
+  }
 
-export default App
+  return <SearchForm onSubmit={handleSearch} isLoading={state.view === 'loading'} />;
+};
+
+export default App;

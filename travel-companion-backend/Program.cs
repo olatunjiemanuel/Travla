@@ -1,41 +1,66 @@
+using System.Text.Json;
+using travel_companion_backend.Models;
+using travel_companion_backend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// CORS – allow frontend dev server
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
+// Named HTTP clients
+builder.Services.AddHttpClient("owm");
+builder.Services.AddHttpClient("claude");
+
+// Application services
+builder.Services.AddSingleton<WeatherService>();
+builder.Services.AddSingleton<TravelAiService>();
+builder.Services.AddSingleton<TravelSummaryService>();
+
+// Camel-case JSON so C# records serialise to camelCase for the frontend
+builder.Services.ConfigureHttpJsonOptions(opts =>
+{
+    opts.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+app.UseCors("Frontend");
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapPost("/api/travel/summary", async (TravelRequest request, TravelSummaryService summaryService) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    if (string.IsNullOrWhiteSpace(request.City))
+        return Results.BadRequest(new { error = "City is required." });
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    if (!DateOnly.TryParse(request.TravelDate, out var travelDate))
+        return Results.BadRequest(new { error = "TravelDate must be a valid date (yyyy-MM-dd)." });
+
+    try
+    {
+        var result = await summaryService.GetSummaryAsync(request.City.Trim(), travelDate);
+        return Results.Ok(result);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(
+            detail: ex.Message,
+            title: "Failed to retrieve travel summary.",
+            statusCode: 500
+        );
+    }
+});
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
