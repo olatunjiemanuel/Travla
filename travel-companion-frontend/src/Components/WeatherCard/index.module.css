@@ -1,5 +1,3 @@
-@import '../../styles/variables.css';
-
 .weatherCard {
   display: flex;
   align-items: center;
