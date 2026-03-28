@@ -1,0 +1,59 @@
+@import '../../styles/variables.css';
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem;
+  background: var(--color-bg);
+}
+
+.cardTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.4rem 0 0.3rem;
+}
+
+.cardText {
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  background: var(--color-badge-place-bg);
+  color: var(--color-badge-place-text);
+  padding: 0.2em 0.55em;
+  border-radius: var(--radius-sm);
+}
+
+.badgeEvent {
+  background: var(--color-badge-event-bg);
+  color: var(--color-badge-event-text);
+}
+
+@media (max-width: 480px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}

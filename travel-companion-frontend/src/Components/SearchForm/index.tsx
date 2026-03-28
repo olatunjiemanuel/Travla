@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import styles from './index.module.css';
 
 interface SearchFormProps {
   onSubmit: (city: string, travelDate: string) => void;
   isLoading: boolean;
 }
 
-export default function SearchForm({ onSubmit, isLoading }: SearchFormProps) {
+const SearchForm: React.FC<SearchFormProps> = ({ onSubmit, isLoading }) => {
   const [city, setCity] = useState('');
   const [travelDate, setTravelDate] = useState('');
   const [validationError, setValidationError] = useState('');
@@ -29,40 +30,40 @@ export default function SearchForm({ onSubmit, isLoading }: SearchFormProps) {
   }
 
   return (
-    <div className="search-page">
-      <h1 className="app-title">Travla</h1>
-      <p className="app-subtitle">Enter a destination and date to get your travel snapshot.</p>
-      <form className="search-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+    <div className={styles.searchPage}>
+      <h1 className={styles.appTitle}>Travla</h1>
+      <p className={styles.appSubtitle}>Enter a destination and date to get your travel snapshot.</p>
+      <form className={styles.searchForm} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
           <label htmlFor="city">Destination city</label>
           <input
             id="city"
             type="text"
             placeholder="e.g. Tokyo, Paris, New York"
             value={city}
-            onChange={e => setCity(e.target.value)}
+            onChange={(e) => setCity(e.target.value)}
             disabled={isLoading}
             autoFocus
           />
         </div>
-        <div className="form-group">
+        <div className={styles.formGroup}>
           <label htmlFor="travelDate">Travel date</label>
           <input
             id="travelDate"
             type="date"
             min={today}
             value={travelDate}
-            onChange={e => setTravelDate(e.target.value)}
+            onChange={(e) => setTravelDate(e.target.value)}
             disabled={isLoading}
           />
         </div>
-        {validationError && (
-          <div className="error-box">{validationError}</div>
-        )}
-        <button type="submit" disabled={isLoading}>
+        {validationError && <div className={styles.errorBox}>{validationError}</div>}
+        <button type="submit" className={styles.submitBtn} disabled={isLoading}>
           {isLoading ? 'Searching…' : 'Get travel snapshot'}
         </button>
       </form>
     </div>
   );
-}
+};
+
+export default SearchForm;

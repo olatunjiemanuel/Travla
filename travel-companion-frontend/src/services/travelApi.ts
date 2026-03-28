@@ -1,9 +1,9 @@
 import type { TravelRequest, TravelSummaryResponse } from '../types/travel';
 
-const BASE_URL = 'http://localhost:5077';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function fetchTravelSummary(
-  request: TravelRequest
+  request: TravelRequest,
 ): Promise<TravelSummaryResponse> {
   const response = await fetch(`${BASE_URL}/api/travel/summary`, {
     method: 'POST',
@@ -12,7 +12,7 @@ export async function fetchTravelSummary(
   });
 
   if (!response.ok) {
-    const errorBody = await response.json().catch(() => ({})) as { error?: string };
+    const errorBody = (await response.json().catch(() => ({}))) as { error?: string };
     throw new Error(errorBody.error ?? `Request failed with status ${response.status}`);
   }
 

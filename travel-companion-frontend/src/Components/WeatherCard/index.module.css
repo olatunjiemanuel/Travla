@@ -1,0 +1,64 @@
+@import '../../styles/variables.css';
+
+.weatherCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  margin-bottom: 2.5rem;
+  background: var(--color-bg);
+}
+
+.weatherCardClimate {
+  padding: 1.2rem 1.6rem;
+}
+
+.weatherTemp {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.weatherDescription {
+  color: var(--color-text-dim);
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+}
+
+.weatherBadge {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-forecast-badge-bg);
+  color: var(--color-forecast-badge-text);
+  padding: 0.2em 0.5em;
+  border-radius: var(--radius-sm);
+  margin-top: 0.5rem;
+}
+
+.weatherLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.weatherClimateText {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .weatherCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .weatherTemp {
+    font-size: 1.3rem;
+  }
+}

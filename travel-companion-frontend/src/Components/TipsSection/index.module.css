@@ -1,0 +1,27 @@
+@import '../../styles/variables.css';
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tipsList {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 2;
+  color: var(--color-text-label);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .tipsList {
+    padding-left: 1rem;
+  }
+}
