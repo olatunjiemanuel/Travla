@@ -40,7 +40,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("Frontend");
 app.UseHttpsRedirection();
 
-app.MapPost("/api/travel/summary", async (TravelRequest request, TravelSummaryService summaryService) =>
+app.MapPost("/api/travel/summary", async (TravelRequest request, TravelSummaryService summaryService, ILogger<Program> logger) =>
 {
     if (string.IsNullOrWhiteSpace(request.City))
         return Results.BadRequest(new { error = "City is required." });
@@ -55,11 +55,8 @@ app.MapPost("/api/travel/summary", async (TravelRequest request, TravelSummarySe
     }
     catch (Exception ex)
     {
-        return Results.Problem(
-            detail: ex.Message,
-            title: "Failed to retrieve travel summary.",
-            statusCode: 500
-        );
+        logger.LogError(ex, "Failed to get travel summary for {City} on {Date}", request.City, travelDate);
+        return Results.Json(new { error = "Something went wrong. Please try again." }, statusCode: 500);
     }
 });
 

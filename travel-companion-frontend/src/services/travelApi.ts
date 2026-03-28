@@ -14,11 +14,9 @@ export async function fetchTravelSummary(
   if (!response.ok) {
     const errorBody = (await response.json().catch(() => ({}))) as {
       error?: string;
-      detail?: string;
     };
-    throw new Error(
-      errorBody.error ?? errorBody.detail ?? `Request failed with status ${response.status}`,
-    );
+    console.error('[travelApi] Request failed:', errorBody.error ?? `HTTP ${response.status}`);
+    throw new Error('Something went wrong. Please try again.');
   }
 
   return response.json() as Promise<TravelSummaryResponse>;
