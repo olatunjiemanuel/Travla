@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import styles from './App.module.css';
 import SearchForm from './Components/SearchForm';
 import TravelSummaryView from './Components/TravelSummaryView';
@@ -29,28 +30,39 @@ const App: React.FC = () => {
 
   if (state.view === 'results') {
     return (
-      <TravelSummaryView
-        summary={state.summary}
-        city={state.city}
-        travelDate={state.travelDate}
-        onReset={() => setState({ view: 'search' })}
-      />
+      <>
+        <TravelSummaryView
+          summary={state.summary}
+          city={state.city}
+          travelDate={state.travelDate}
+          onReset={() => setState({ view: 'search' })}
+        />
+        <Analytics />
+      </>
     );
   }
 
   if (state.view === 'error') {
     return (
-      <div className={styles.searchPage}>
-        <h1 className={styles.appTitle}>Travla</h1>
-        <div className={styles.errorBox}>{state.message}</div>
-        <button className={styles.btnSecondary} onClick={() => setState({ view: 'search' })}>
-          Try again
-        </button>
-      </div>
+      <>
+        <div className={styles.searchPage}>
+          <h1 className={styles.appTitle}>Travla</h1>
+          <div className={styles.errorBox}>{state.message}</div>
+          <button className={styles.btnSecondary} onClick={() => setState({ view: 'search' })}>
+            Try again
+          </button>
+        </div>
+        <Analytics />
+      </>
     );
   }
 
-  return <SearchForm onSubmit={handleSearch} isLoading={state.view === 'loading'} />;
+  return (
+    <>
+      <SearchForm onSubmit={handleSearch} isLoading={state.view === 'loading'} />
+      <Analytics />
+    </>
+  );
 };
 
 export default App;
