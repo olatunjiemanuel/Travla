@@ -1,0 +1,50 @@
+:root {
+  /* Colours */
+  --color-primary: #4f6ef7;
+  --color-primary-hover: #3a5ae0;
+  --color-bg-page: #242424;
+  --color-bg: #111;
+  --color-bg-input: #1a1a1a;
+  --color-bg-error: #2a0f0f;
+  --color-border: #333;
+  --color-border-input: #444;
+  --color-border-error: #7f1d1d;
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-muted: #888;
+  --color-text-dim: #aaa;
+  --color-text-label: #ccc;
+  --color-text-error: #fca5a5;
+  --color-badge-place-bg: #1e3350;
+  --color-badge-place-text: #93c5fd;
+  --color-badge-event-bg: #2d1e40;
+  --color-badge-event-text: #c4b5fd;
+  --color-forecast-badge-bg: #1e3a8a;
+  --color-forecast-badge-text: #93c5fd;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+}
