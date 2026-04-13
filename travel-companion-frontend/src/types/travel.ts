@@ -29,5 +29,6 @@ export interface TravelSummaryResponse {
 
 export interface TravelRequest {
   city: string;
-  travelDate: string; // ISO format: "yyyy-MM-dd"
+  startDate: string; // ISO format: "yyyy-MM-dd"
+  endDate: string;   // ISO format: "yyyy-MM-dd"
 }

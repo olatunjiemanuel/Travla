@@ -9,21 +9,27 @@ import styles from './index.module.css';
 interface TravelSummaryViewProps {
   summary: TravelSummaryResponse;
   city: string;
-  travelDate: string;
+  startDate: string;
+  endDate: string;
   onReset: () => void;
 }
 
 const TravelSummaryView: React.FC<TravelSummaryViewProps> = ({
   summary,
   city,
-  travelDate,
+  startDate,
+  endDate,
   onReset,
 }) => {
-  const formattedDate = new Date(travelDate + 'T00:00:00').toLocaleDateString('en-GB', {
+  const dateOptions: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  });
+  };
+
+  const formattedStart = new Date(startDate + 'T00:00:00').toLocaleDateString('en-GB', dateOptions);
+  const formattedEnd = new Date(endDate + 'T00:00:00').toLocaleDateString('en-GB', dateOptions);
+  const formattedDate = startDate === endDate ? formattedStart : `${formattedStart} – ${formattedEnd}`;
 
   return (
     <div className={styles.summaryView}>
