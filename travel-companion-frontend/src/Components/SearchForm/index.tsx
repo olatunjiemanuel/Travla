@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styles from './index.module.css';
 
 interface SearchFormProps {
-  onSubmit: (city: string, travelDate: string) => void;
-  isLoading: boolean;
+  onSubmit: (city: string, startDate: string, endDate: string) => void;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({ onSubmit, isLoading }) => {
+const SearchForm: React.FC<SearchFormProps> = ({ onSubmit }) => {
   const [city, setCity] = useState('');
-  const [travelDate, setTravelDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [validationError, setValidationError] = useState('');
 
   const today = new Date().toISOString().split('T')[0];
@@ -21,18 +21,26 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit, isLoading }) => {
       setValidationError('Please enter a destination city.');
       return;
     }
-    if (!travelDate) {
-      setValidationError('Please select a travel date.');
+    if (!startDate) {
+      setValidationError('Please select a departure date.');
+      return;
+    }
+    if (!endDate) {
+      setValidationError('Please select a return date.');
+      return;
+    }
+    if (endDate < startDate) {
+      setValidationError('Return date must be on or after the departure date.');
       return;
     }
 
-    onSubmit(city.trim(), travelDate);
+    onSubmit(city.trim(), startDate, endDate);
   }
 
   return (
     <div className={styles.searchPage}>
       <h1 className={styles.appTitle}>Travla</h1>
-      <p className={styles.appSubtitle}>Enter a destination and date to get your travel snapshot.</p>
+      <p className={styles.appSubtitle}>Enter a destination and travel dates to get your travel snapshot.</p>
       <form className={styles.searchForm} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <label htmlFor="city">Destination city</label>
@@ -42,24 +50,37 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSubmit, isLoading }) => {
             placeholder="e.g. Tokyo, Paris, New York"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            disabled={isLoading}
             autoFocus
           />
         </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="travelDate">Travel date</label>
-          <input
-            id="travelDate"
-            type="date"
-            min={today}
-            value={travelDate}
-            onChange={(e) => setTravelDate(e.target.value)}
-            disabled={isLoading}
-          />
+        <div className={styles.dateRangeGroup}>
+          <div className={styles.formGroup}>
+            <label htmlFor="startDate">Departure date</label>
+            <input
+              id="startDate"
+              type="date"
+              min={today}
+              value={startDate}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                if (endDate && endDate < e.target.value) setEndDate('');
+              }}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="endDate">Return date</label>
+            <input
+              id="endDate"
+              type="date"
+              min={startDate || today}
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
         </div>
         {validationError && <div className={styles.errorBox}>{validationError}</div>}
-        <button type="submit" className={styles.submitBtn} disabled={isLoading}>
-          {isLoading ? 'Searching…' : 'Get travel snapshot'}
+        <button type="submit" className={styles.submitBtn}>
+          Get travel snapshot
         </button>
       </form>
     </div>

@@ -23,13 +23,19 @@
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+}
+
+.dateRangeGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
 .formGroup label {
@@ -86,7 +92,6 @@
   padding: 0.9rem 1.2rem;
   color: var(--color-text-error);
   font-size: 0.9rem;
-  max-width: 420px;
   width: 100%;
 }
 
@@ -101,5 +106,9 @@
 
   .searchForm {
     max-width: 100%;
+  }
+
+  .dateRangeGroup {
+    grid-template-columns: 1fr;
   }
 }

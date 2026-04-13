@@ -4,15 +4,15 @@ namespace travel_companion_backend.Services;
 
 public class TravelSummaryService(WeatherService weatherService, TravelAiService travelAiService)
 {
-    public async Task<TravelSummaryResponse> GetSummaryAsync(string city, DateOnly travelDate)
+    public async Task<TravelSummaryResponse> GetSummaryAsync(string city, DateOnly startDate, DateOnly endDate)
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var daysOut = travelDate.DayNumber - today.DayNumber;
+        var daysOut = startDate.DayNumber - today.DayNumber;
         var includeClimateContext = daysOut > 5;
 
         // Run both calls in parallel to minimise latency
-        var weatherTask = weatherService.GetWeatherAsync(city, travelDate);
-        var aiTask = travelAiService.GetTravelDataAsync(city, travelDate, includeClimateContext);
+        var weatherTask = weatherService.GetWeatherAsync(city, startDate);
+        var aiTask = travelAiService.GetTravelDataAsync(city, startDate, endDate, includeClimateContext);
 
         await Task.WhenAll(weatherTask, aiTask);
 

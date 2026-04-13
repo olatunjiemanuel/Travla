@@ -21,18 +21,23 @@ public class TravelAiService(IHttpClientFactory httpClientFactory, IConfiguratio
 
     public async Task<AiTravelData> GetTravelDataAsync(
         string city,
-        DateOnly travelDate,
+        DateOnly startDate,
+        DateOnly endDate,
         bool includeClimateContext)
     {
-        var month = travelDate.ToString("MMMM");
-        var formattedDate = travelDate.ToString("MMMM d, yyyy");
+        var month = startDate.ToString("MMMM");
+        var formattedStart = startDate.ToString("MMMM d, yyyy");
+        var formattedEnd = endDate.ToString("MMMM d, yyyy");
+        var dateContext = startDate == endDate
+            ? $"on {formattedStart}"
+            : $"from {formattedStart} to {formattedEnd}";
 
         var climateInstructions = includeClimateContext
             ? $"Describe the typical weather and climate for {city} in {month}. Be concise (2-3 sentences)."
             : "Set this to null.";
 
         var userMessage = $$"""
-            I am travelling to {{city}} on {{formattedDate}}.
+            I am travelling to {{city}} {{dateContext}}.
 
             Return a JSON object with exactly these keys:
             {

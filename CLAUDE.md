@@ -1,7 +1,7 @@
 # Travla
 
 ## Purpose
-AI-powered travel companion that combines real weather data (OpenWeatherMap) with Claude-generated recommendations for any destination and date.
+AI-powered travel companion that combines real weather data (OpenWeatherMap) with Claude-generated recommendations for any destination and travel date range.
 
 ## Stack
 - **Frontend:** Vite + React 19 + TypeScript, CSS Modules, `src/styles/variables.css` for design tokens
@@ -34,7 +34,8 @@ AI-powered travel companion that combines real weather data (OpenWeatherMap) wit
 
 ## API / Backend
 - Backend runs on `http://localhost:5077` locally
-- Single endpoint: `POST /api/travel/summary` — accepts `{ city, travelDate }`, returns weather + AI recommendations
+- Single endpoint: `POST /api/travel/summary` — accepts `{ city, startDate, endDate }` (ISO dates), returns weather + AI recommendations
+- Weather lookup uses `startDate`; AI prompt receives the full date range
 - Claude API key and OpenWeatherMap API key configured in `appsettings.Development.json` (not committed)
 
 ## Tests

@@ -1,12 +1,17 @@
 @import './styles/variables.css';
 
+@keyframes bgShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: var(--font-weight-regular);
   color-scheme: dark;
   color: var(--color-text);
-  background-color: var(--color-bg-page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,6 +28,16 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #0a0a1a 0%,
+    #0d1b3e 25%,
+    #111 50%,
+    #0d1b3e 75%,
+    #0a0a1a 100%
+  );
+  background-size: 400% 400%;
+  animation: bgShift 20s ease infinite;
 }
 
 #root {
