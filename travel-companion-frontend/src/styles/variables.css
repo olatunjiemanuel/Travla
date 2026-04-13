@@ -13,6 +13,7 @@
   --color-border-input: #444;
   --color-border-error: #7f1d1d;
   --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-on-primary: #fff;
   --color-text-muted: #888;
   --color-text-dim: #aaa;
   --color-text-label: #ccc;

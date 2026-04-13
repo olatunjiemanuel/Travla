@@ -63,7 +63,7 @@
 .submitBtn {
   padding: 0.75em 1.5em;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-text-on-primary);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
