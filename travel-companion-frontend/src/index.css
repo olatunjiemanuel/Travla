@@ -30,11 +30,11 @@ body {
   min-height: 100vh;
   background: linear-gradient(
     135deg,
-    #0a0a1a 0%,
-    #0d1b3e 25%,
-    #111 50%,
-    #0d1b3e 75%,
-    #0a0a1a 100%
+    var(--color-bg-deep) 0%,
+    var(--color-bg-navy) 25%,
+    var(--color-bg) 50%,
+    var(--color-bg-navy) 75%,
+    var(--color-bg-deep) 100%
   );
   background-size: 400% 400%;
   animation: bgShift 20s ease infinite;

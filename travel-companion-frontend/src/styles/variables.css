@@ -4,8 +4,11 @@
   --color-primary-hover: #3a5ae0;
   --color-bg-page: #242424;
   --color-bg: #111;
+  --color-bg-deep: #0a0a1a;
+  --color-bg-navy: #0d1b3e;
   --color-bg-input: #1a1a1a;
   --color-bg-error: #2a0f0f;
+  --color-skeleton-shimmer: #3a3a3a;
   --color-border: #333;
   --color-border-input: #444;
   --color-border-error: #7f1d1d;

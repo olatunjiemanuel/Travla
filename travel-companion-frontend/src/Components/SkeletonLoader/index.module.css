@@ -11,7 +11,7 @@
   background: linear-gradient(
     90deg,
     var(--color-border) 0%,
-    #3a3a3a 50%,
+    var(--color-skeleton-shimmer) 50%,
     var(--color-border) 100%
   );
   background-size: 800px 100%;
