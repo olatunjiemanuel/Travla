@@ -1,11 +1,5 @@
 @import './styles/variables.css';
 
-@keyframes bgShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -28,20 +22,6 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-deep) 0%,
-    var(--color-bg-navy) 25%,
-    var(--color-bg) 50%,
-    var(--color-bg-navy) 75%,
-    var(--color-bg-deep) 100%
-  );
-  background-size: 400% 400%;
-  animation: bgShift 20s ease infinite;
-}
-
-#root {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  background: var(--color-bg-deep);
+  overflow-x: hidden;
 }

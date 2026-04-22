@@ -17,6 +17,11 @@ AI-powered travel companion that combines real weather data (OpenWeatherMap) wit
 - Logic and API calls go in `src/services/`, not inline in components
 - TypeScript interfaces in `src/types/travel.ts`
 
+## Layout
+- Page centering (`max-width`, `margin: 0 auto`, `padding`) lives in `.contentLayer` in `App.module.css` — not on `#root` in `index.css`
+- `InteractiveBackground` (canvas) is rendered once in `App.tsx` at `z-index: 0`; `.contentLayer` sits above it at `z-index: 1`
+- Cards use frosted-glass tokens (`--color-glass-bg`, `--color-glass-border`) with `backdrop-filter: blur(12px)` so the background shows through
+
 ## CSS Conventions
 - CSS Modules only — no Tailwind, no inline styles
 - `variables.css` is imported once globally in `index.css` — do not `@import` it in individual modules
