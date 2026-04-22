@@ -28,6 +28,7 @@ const RETURN_SPEED = 0.03;
 const FRICTION = 0.92;
 const RIPPLE_SPEED = 6;
 const RIPPLE_PUSH = 3;
+const PRIMARY_RGB = '79, 110, 247';
 
 const InteractiveBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -113,7 +114,7 @@ const InteractiveBackground: React.FC = () => {
     canvas.addEventListener('click', handleClick);
 
     const animate = () => {
-      const { width, height } = canvas;
+      const { width } = canvas;
       ctx.clearRect(0, 0, width, height);
 
       const particles = particlesRef.current;
@@ -180,7 +181,7 @@ const InteractiveBackground: React.FC = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connDist) {
             const alpha = (1 - dist / connDist) * 0.25;
-            ctx.strokeStyle = `rgba(79, 110, 247, ${alpha})`;
+            ctx.strokeStyle = `rgba(${PRIMARY_RGB}, ${alpha})`;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -208,9 +209,9 @@ const InteractiveBackground: React.FC = () => {
           );
           gradient.addColorStop(
             0,
-            `rgba(79, 110, 247, ${proximity * 0.4})`,
+            `rgba(${PRIMARY_RGB}, ${proximity * 0.4})`,
           );
-          gradient.addColorStop(1, 'rgba(79, 110, 247, 0)');
+          gradient.addColorStop(1, `rgba(${PRIMARY_RGB}, 0)`);
           ctx.fillStyle = gradient;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius * 6, 0, Math.PI * 2);
@@ -219,7 +220,7 @@ const InteractiveBackground: React.FC = () => {
 
         // Core dot
         const coreAlpha = 0.4 + proximity * 0.6;
-        ctx.fillStyle = `rgba(79, 110, 247, ${coreAlpha})`;
+        ctx.fillStyle = `rgba(${PRIMARY_RGB}, ${coreAlpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -227,7 +228,7 @@ const InteractiveBackground: React.FC = () => {
 
       // Draw ripple rings
       for (const r of ripples) {
-        ctx.strokeStyle = `rgba(79, 110, 247, ${r.opacity * 0.5})`;
+        ctx.strokeStyle = `rgba(${PRIMARY_RGB}, ${r.opacity * 0.5})`;
         ctx.lineWidth = 2 * dpr;
         ctx.beginPath();
         ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
@@ -239,8 +240,18 @@ const InteractiveBackground: React.FC = () => {
 
     animFrameRef.current = requestAnimationFrame(animate);
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animFrameRef.current);
+      } else {
+        animFrameRef.current = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
     return () => {
       cancelAnimationFrame(animFrameRef.current);
+      document.removeEventListener('visibilitychange', handleVisibility);
       window.removeEventListener('resize', resize);
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
