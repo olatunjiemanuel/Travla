@@ -114,7 +114,7 @@ const InteractiveBackground: React.FC = () => {
     canvas.addEventListener('click', handleClick);
 
     const animate = () => {
-      const { width } = canvas;
+      const { width, height } = canvas;
       ctx.clearRect(0, 0, width, height);
 
       const particles = particlesRef.current;
