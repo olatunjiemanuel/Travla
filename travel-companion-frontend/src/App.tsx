@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import styles from './App.module.css';
+import InteractiveBackground from './Components/InteractiveBackground';
 import SearchForm from './Components/SearchForm';
 import SkeletonLoader from './Components/SkeletonLoader';
 import TravelSummaryView from './Components/TravelSummaryView';
@@ -29,18 +30,13 @@ const App: React.FC = () => {
     }
   }
 
-  if (state.view === 'loading') {
-    return (
-      <>
-        <SkeletonLoader city={state.city} />
-        <Analytics />
-      </>
-    );
-  }
+  const renderContent = () => {
+    if (state.view === 'loading') {
+      return <SkeletonLoader city={state.city} />;
+    }
 
-  if (state.view === 'results') {
-    return (
-      <>
+    if (state.view === 'results') {
+      return (
         <TravelSummaryView
           summary={state.summary}
           city={state.city}
@@ -48,14 +44,11 @@ const App: React.FC = () => {
           endDate={state.endDate}
           onReset={() => setState({ view: 'search' })}
         />
-        <Analytics />
-      </>
-    );
-  }
+      );
+    }
 
-  if (state.view === 'error') {
-    return (
-      <>
+    if (state.view === 'error') {
+      return (
         <div className={styles.searchPage}>
           <h1 className={styles.appTitle}>Travla</h1>
           <div className={styles.errorBox}>{state.message}</div>
@@ -63,14 +56,18 @@ const App: React.FC = () => {
             Try again
           </button>
         </div>
-        <Analytics />
-      </>
-    );
-  }
+      );
+    }
+
+    return <SearchForm onSubmit={handleSearch} />;
+  };
 
   return (
     <>
-      <SearchForm onSubmit={handleSearch} />
+      <InteractiveBackground />
+      <div className={styles.contentLayer}>
+        {renderContent()}
+      </div>
       <Analytics />
     </>
   );

@@ -1,3 +1,11 @@
+.contentLayer {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
 .searchPage {
   display: flex;
   flex-direction: column;
